@@ -5,4 +5,4 @@ derle:
 	g++ -I ./include/ -o ./bin/deneme ./lib/Ogrenci.o ./src/deneme.cpp
 	
 calistir:
-	             ./bin/deneme
+	./bin/deneme
