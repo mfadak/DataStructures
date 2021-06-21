@@ -1,24 +1,24 @@
 #include "Ogrenci.hpp"
 
 Ogrenci::Ogrenci(int ys,double by){
-		yas=ys;
-		boy=by;
+	yas=ys;
+	boy=by;
 }
 Ogrenci::Ogrenci(){
-		yas=0;
-		boy=30;
+	yas=0;
+	boy=30;
 }
 void Ogrenci::YasIlerle(int ys){
-		yas+=ys;
+	yas+=ys;
 }
 void Ogrenci::BoyUza(double by){
-		boy+=by;
+	boy+=by;
 }
 int Ogrenci::getYas(){
-		return yas;
+	return yas;
 }
 double Ogrenci::getBoy(){
-		return boy;
+	return boy;
 }
 Ogrenci::~Ogrenci(){
   	cout<<"Cagrildi"<<endl;
