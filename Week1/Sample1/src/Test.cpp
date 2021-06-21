@@ -1,4 +1,5 @@
 #include "Ogrenci.hpp"
+
 int main(){
 	Ogrenci o1,o2(5,135);
 	cout<<"Ogrenci 1:"<<endl;
