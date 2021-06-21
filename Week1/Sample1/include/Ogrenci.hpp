@@ -3,6 +3,7 @@
 
 #include <iostream>
 using namespace std;
+
 class Ogrenci{
 	private:
 		int yas;
