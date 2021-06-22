@@ -4,7 +4,7 @@ derle:
 	mkdir lib
 	mkdir bin
 	g++ -I ./include/ -o ./lib/Ogrenci.o -c ./src/Ogrenci.cpp
-	g++ -I ./include/ -o ./bin/deneme ./lib/Ogrenci.o ./src/deneme.cpp
+	g++ -I ./include/ -o ./bin/Test ./lib/Ogrenci.o ./src/Test.cpp
 
 calistir:
-	./bin/deneme
+	./bin/Test
