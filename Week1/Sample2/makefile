@@ -5,4 +5,4 @@ derle:
 	g++ -I ./include/ -o ./bin/Test ./lib/Sebze.o ./lib/Meyve.o ./src/Test.cpp
 	
 calistir:
-	./bin/deneme
+	./bin/Test
