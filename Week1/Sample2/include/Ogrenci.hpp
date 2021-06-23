@@ -41,7 +41,8 @@ class Ogrenci{
 		double getKilo(){
 			return kilo;
 		}
-		void YemekYe(Sebze yemek){
+		template <typename YIYECEK>
+		void YemekYe(YIYECEK yemek){
 			kilo += yemek.getKalori()/1000;
 		}
 };
