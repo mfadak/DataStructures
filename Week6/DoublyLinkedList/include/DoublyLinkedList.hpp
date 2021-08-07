@@ -9,7 +9,8 @@ class DoublyLinkedList{
 		Node<Object> *head;
 		int size;
 		
-		Node<Object>* FindPreviousByPosition(int index){
+		Node<Object>* FindPreviousByPosition(int index)throw(NoSuchElement){
+			if(position < 0 || position > size) throw NoSuchElement("No Such Element");
 			Node<Object> *prv = head;
 			int i=1;
 			for(Node<Object> *itr = head; itr->next != NULL && i != index; itr=itr->next,i++){
@@ -31,8 +32,8 @@ class DoublyLinkedList{
 		void add(const Object& item){
 			insert(size,item);
 		}
-		void insert(int index,const Object& item){
-			// if(index < 0 || index > size) throw HATA
+		void insert(int index,const Object& item)throw(NoSuchElement){
+			if(index < 0 || index > size) throw NoSuchElement("No Such Element");
 			if(index == 0){
 				head = new Node<Object>(item,head);
 				if(head->next != NULL) head->next->prev = head;
@@ -45,28 +46,28 @@ class DoublyLinkedList{
 			}
 			size++;
 		}
-		const Object& first(){
-			//if(isEmpty()) throw HATA
+		const Object& first()throw(NoSuchElement){
+			if(isEmpty()) throw NoSuchElement("No Such Element");
 			return head->data;
 		}
-		const Object& last(){
-			//if(isEmpty()) throw HATA
+		const Object& last()throw(NoSuchElement){
+			if(isEmpty()) throw NoSuchElement("No Such Element");
 			return FindPreviousByPosition(size)->data;
 		}
-		int indexOf(const Object& item){
+		int indexOf(const Object& item)throw(NoSuchElement){
 			int index=0;
 			for(Node<Object> *itr=head;itr!=NULL;itr=itr->next){
 				if(itr->data == item) return index;
 				index++;
 			}
-			throw "HATA";
+			throw NoSuchElement("No Such Element");
 		}
 		void remove(const Object& item){
 			int index = indexOf(item);
 			removeAt(index);
 		}
-		void removeAt(int index){
-			// if(index < 0 || index >= size) throw HATA
+		void removeAt(int index)throw(NoSuchElement){
+			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
 			Node<Object> *del;
 			if(index == 0){
 				del = head;
@@ -89,8 +90,8 @@ class DoublyLinkedList{
 			}
 			return false;
 		}
-		const Object& elementAt(int index){
-			// if(index < 0 || index >= size) throw HATA
+		const Object& elementAt(int index)throw(NoSuchElement){
+			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
 			if(index == 0) return head->data;
 			return FindPreviousByPosition(index)->next->data;
 		}
@@ -105,8 +106,8 @@ class DoublyLinkedList{
 			screen<<endl;
 			return screen;
 		}
-		void printNodesFromPositionInReverseOrder(int index){
-			// if(index < 0 || index >= size) throw HATA
+		void printNodesFromPositionInReverseOrder(int index)throw(NoSuchElement){
+			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
 			for(Node<Object> *itr = FindPreviousByPosition(index+1);itr!=NULL;itr=itr->prev){
 				cout<<itr->data<<" <-> ";
 			}
