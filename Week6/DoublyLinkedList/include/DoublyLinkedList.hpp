@@ -2,6 +2,7 @@
 #define DOUBLYLINKEDLIST
 
 #include "Node.hpp"
+#include "NoSuchElement.hpp"
 
 template <typename Object>
 class DoublyLinkedList{
