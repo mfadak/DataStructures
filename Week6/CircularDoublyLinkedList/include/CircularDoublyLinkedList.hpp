@@ -109,7 +109,7 @@ class CircularDoublyLinkedList{
 			while(!isEmpty())
 				removeAt(0);
 		}
-		friend ostream& operator<<(ostream& screen,CircularDoubleLinkedList& rgt){
+		friend ostream& operator<<(ostream& screen,CircularDoublyLinkedList& rgt){
 			int index=0;
 			for(Node<Object> *itr=rgt.head;index<rgt.size;itr=itr->next,index++){
 				screen<<itr->data<<" <-> ";
@@ -136,7 +136,7 @@ class CircularDoublyLinkedList{
 		void printReverseOrder(){
 			printNodesFromPositionInReverseOrder(size-1);			
 		}
-		~CircularDoubleLinkedList(){
+		~CircularDoublyLinkedList(){
 			clear();
 		}
 
