@@ -2,7 +2,6 @@
 #define LINKEDLIST_HPP
 
 #include "Iterator.hpp"
-#include "EmptyList.hpp"
 #include "NoSuchElement.hpp"
 
 template <typename Object>
