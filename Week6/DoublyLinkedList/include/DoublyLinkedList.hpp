@@ -11,7 +11,7 @@ class DoublyLinkedList{
 		int size;
 		
 		Node<Object>* FindPreviousByPosition(int index)throw(NoSuchElement){
-			if(position < 0 || position > size) throw NoSuchElement("No Such Element");
+			if(index < 0 || index > size) throw NoSuchElement("No Such Element");
 			Node<Object> *prv = head;
 			int i=1;
 			for(Node<Object> *itr = head; itr->next != NULL && i != index; itr=itr->next,i++){
