@@ -30,5 +30,5 @@ int main(){
 	cout<<endl;
 	tree->inorder();
 	delete tree;
-	return 0;
+	return 0; 
 }
