@@ -77,7 +77,7 @@ class CircularDoublyLinkedList{
 			Node<Object> *del;
 			if(index == 0){
 				del = head;
-				if(size == 1) head = head->next = head->prev = NULL;
+				if(size == 1) head = NULL;
 				else{
 					head = head->next;
 					head->prev = del->prev;
