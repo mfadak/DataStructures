@@ -7,7 +7,7 @@ It contains the codes I wrote in the data structures course.
 <b>Week 4 :</b> List data structure using arrays (ArrayList). <br>
 <b>Week 5 :</b> LinkedList, Circular LinkedList. <br>
 <b>Week 6 :</b> Doubly LinkedList and Doubly Circular LinkedList. <br>
-<b>Week 7 :</b> Stack implementation and Postfix application. <br>
+<b>Week 7 :</b> Stack implementation and Stack applications. <br>
 <b>Week 8 :</b> Queue and Priority Queue Data Structures. <br>
 <b>Week 9 :</b> Binary search tree implementations using array. <br>
 <b>Week 10 :</b> Linked binary search tree. <br>
