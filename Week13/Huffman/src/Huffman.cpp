@@ -23,6 +23,7 @@ Node* Huffman::CreateTree(int freq[]){
 	}	
 }
 void Huffman::AssignCodes(Node* subNode,string code){
+	if(subNode == NULL) return;
 	if(!subNode->isLeaf()){
 		AssignCodes(subNode->left,code+"0");
 		AssignCodes(subNode->right,code+"1");
