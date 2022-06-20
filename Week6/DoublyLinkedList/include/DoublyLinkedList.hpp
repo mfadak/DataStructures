@@ -33,8 +33,8 @@ class DoublyLinkedList{
 		void add(const Object& item){
 			insert(size,item);
 		}
-		void insert(int index,const Object& item)throw(NoSuchElement){
-			if(index < 0 || index > size) throw NoSuchElement("No Such Element");
+		void insert(int index,const Object& item){
+			if(index < 0 || index > size) throw "Index out of Range";
 			if(index == 0){
 				head = new Node<Object>(item,head);
 				if(head->next != NULL) head->next->prev = head;
@@ -67,8 +67,8 @@ class DoublyLinkedList{
 			int index = indexOf(item);
 			removeAt(index);
 		}
-		void removeAt(int index)throw(NoSuchElement){
-			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
+		void removeAt(int index){
+			if(index < 0 || index >= size) throw "Index out of Range";
 			Node<Object> *del;
 			if(index == 0){
 				del = head;
@@ -90,6 +90,18 @@ class DoublyLinkedList{
 				if(itr->data == item) return true;
 			}
 			return false;
+		}
+		void reverse(){
+			for(Node<Object> *itr=head;itr!=NULL;){
+				Node<Object> *tmp = itr->next;
+				itr->next = itr->prev;
+				itr->prev = tmp;
+				if(tmp == NULL){ 
+					head = itr;
+					break;
+				}
+				itr=tmp;
+			}			
 		}
 		const Object& elementAt(int index)throw(NoSuchElement){
 			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
