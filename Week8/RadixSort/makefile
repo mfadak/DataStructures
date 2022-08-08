@@ -1,7 +1,8 @@
-hepsi: derle calistir
+all: compile run
 
-derle:
-  g++ -I ./include/ -o ./bin/Radix ./src/Radix.cpp
-  
- calistir:
-  ./bin/Radix
+compile:
+	g++ -I ./include/ -o ./lib/Radix.o -c ./src/Radix.cpp
+	g++ -I ./include/ -o ./bin/Test ./lib/Radix.o ./src/Test.cpp
+	
+run:
+	./bin/Test
