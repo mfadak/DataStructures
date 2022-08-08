@@ -1,72 +1,64 @@
-#include "Queue.hpp"
-#include <cmath>
+#include "Radix.hpp"
 
-int BasamakSayisi(int sayi){
-	sayi = abs(sayi);
-	int basamak=0;
-	while(sayi>0){
-		basamak++;
-		sayi /= 10;
-	}
-	return basamak;
-}
-int EnYuksekBasamakSayisi(int *items,int length){
+int Radix::MaxStepNumber(){
 	int max=0;
 	for(int i=0;i<length;i++){
-		if(BasamakSayisi(items[i])>max) max = BasamakSayisi(items[i]);
+		if(StepCount(numbers[i])>max) max = StepCount(numbers[i]);
 	}
 	return max;
 }
-
-int* RadixSort(int *items,int length){
-	Queue<int> **queues = new Queue<int>*[10];
-	for(int i=0;i<10;i++) queues[i] = new Queue<int>();
-	int maksBasamak = EnYuksekBasamakSayisi(items,length);
-	int sayiIndex=0;
-	for(int i=0;i<maksBasamak;i++){
+int Radix::StepCount(int number){
+	number = abs(number);
+	int basamak=0;
+	while(number>0){
+		basamak++;
+		number /= 10;
+	}
+	return basamak;
+}
+Radix::Radix(int *numbers, int length){
+	this->numbers = new int[length];
+	this->length = length;
+	for(int i=0;i<length;i++){ this->numbers[i] = numbers[i]; }
+	queues = new Queue<int>*[10];
+	for(int j=0;j<10;j++){ queues[j] = new Queue<int>(); }
+	maxStep = MaxStepNumber();
+}
+int* Radix::Sort(){
+	int numberIndex=0;
+	// read from array once and add to queues
+	for(;numberIndex<length;numberIndex++){
+		int stepValue = numbers[numberIndex]%10;
+		int num = numbers[numberIndex];
+		queues[stepValue]->enqueue(num);
+	}
+		
+	//i starting from 1 because of first digit processed
+	for(int i=1;i<maxStep;i++){
 		for(int index=0;index<10;index++){
-			if(sayiIndex<length){				
-				int basamakDegeri = items[sayiIndex]%10;
-				queues[basamakDegeri]->enqueue(items[sayiIndex++]);			
-			}
-			else
-			{
-				for(int len=queues[index]->count();len>0;len--){
-					int sayi = queues[index]->peek();
-					queues[index]->dequeue();
-					int basamakDegeri = (sayi/(int)pow(10,i))%10;
-					queues[basamakDegeri]->enqueue(sayi);
-				}
+			for(int len=queues[index]->count();len>0;len--){
+				int number = queues[index]->peek();
+				queues[index]->dequeue();
+				int stepValue = (number/(int)pow(10,i))%10;	
+				queues[stepValue]->enqueue(number);
+				
 			}
 		}
 	}
-	int* sirali = new int[length];
-	sayiIndex=0;
+	int* ordered = new int[length];
+	numberIndex=0;
 	for(int index=0;index<10;index++){
 		while(!queues[index]->isEmpty()){
-			int sayi = queues[index]->peek();
-			sirali[sayiIndex++] = sayi;
+			int number = queues[index]->peek();
+			ordered[numberIndex++] = number;
 			queues[index]->dequeue();
 		}
 	}
-	
+		
+	return ordered;
+}
+Radix::~Radix(){	
+	delete [] numbers;
 	for(int i=0;i<10;i++) delete queues[i];
 	delete [] queues;
-	return sirali;
-}
-
-int main(){
-	int sayilar[] = {167,32,19,356,478,951,5,98,301,7};
-	int *sirali = RadixSort(sayilar,10);
-	cout<<"Siralanmadan Onceki Hali:"<<endl;
-	for(int i=0;i<10;i++){
-		cout<<sayilar[i]<<" ";
-	}
-	cout<<endl<<endl<<"Siralandiktan Sonraki Hali:"<<endl;
-	for(int i=0;i<10;i++){
-		cout<<sirali[i]<<" ";
-	}
-	
-	delete [] sirali;
-	return 0;
 }
