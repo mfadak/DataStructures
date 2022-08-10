@@ -36,7 +36,8 @@ int* Radix::Sort(){
 	//i starting from 1 because of first digit processed
 	for(int i=1;i<maxStep;i++){
 		for(int index=0;index<10;index++){
-			for(int len=queues[index]->count();len>0;len--){
+			int len=queues[index]->count();
+			for(;len>0;len--){
 				int number = queues[index]->peek();
 				queues[index]->dequeue();
 				int stepValue = (number/(int)pow(10,i))%10;	
