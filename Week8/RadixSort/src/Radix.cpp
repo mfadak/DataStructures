@@ -24,6 +24,13 @@ Radix::Radix(int *numbers, int length){
 	for(int j=0;j<10;j++){ queues[j] = new Queue<int>(); }
 	maxStep = MaxStepNumber();
 }
+int* Radix::QueueCurrentLengths(){
+	int *lengths = new int[10];
+	for(int i=0;i<10;i++){
+		lengths[i] = queues[i]->count();
+	}
+	return lengths;
+}
 int* Radix::Sort(){
 	int numberIndex=0;
 	// read from array once and add to queues
@@ -35,16 +42,18 @@ int* Radix::Sort(){
 		
 	//i starting from 1 because of first digit processed
 	for(int i=1;i<maxStep;i++){
+		//get the current length in all queues
+		int *qlengths = QueueCurrentLengths();
 		for(int index=0;index<10;index++){
-			int len=queues[index]->count();
+			int len=qlengths[index];
 			for(;len>0;len--){
 				int number = queues[index]->peek();
 				queues[index]->dequeue();
 				int stepValue = (number/(int)pow(10,i))%10;	
-				queues[stepValue]->enqueue(number);
-				
+				queues[stepValue]->enqueue(number);				
 			}
 		}
+		delete [] qlengths;
 	}
 	int* ordered = new int[length];
 	numberIndex=0;
