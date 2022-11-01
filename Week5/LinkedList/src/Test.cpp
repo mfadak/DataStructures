@@ -1,7 +1,7 @@
-#include "ArrayList.hpp"
+#include "LinkedList.hpp"
 
 int main(){
-	ArrayList<string> *isimler = new ArrayList<string>();
+	LinkedList<string> *isimler = new LinkedList<string>();
 	int sec,konum;
 	string isim;
 	
