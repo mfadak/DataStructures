@@ -1,28 +1,46 @@
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
+#include <iostream>
+using namespace std;
+
 #include "Node.hpp"
 
 template <typename Object>
 class Iterator{
-	public:
+	private:
+		Node<Object> *head;	
 		Node<Object> *current;
+		Node<Object> *prev;
+	
+	public:
 		Iterator(){
-			current = NULL;
+			head=NULL;
+			current=NULL;
+			prev=NULL;
 		}
-		Iterator(Node<Object> *current){
-			this->current = current;
+		Iterator(Node<Object> *head){
+			this->current=head->next;
+			this->head = head;
+			prev=NULL;
 		}
 		bool hasNext(){
 			return current != NULL;
 		}
-		void next(){
-			// if(!hasNext()) throw hata
+		Object next(){
+			if(current == NULL) throw "NULL Reference";
+			prev=current;
 			current = current->next;
+			return prev->item;
 		}
-		const Object& getCurrent()const{
-			// if(!hasNext()) throw hata
-			return current->item;
+		void remove(){
+			if(prev == NULL) throw "NULL Reference";
+			Node<Object> *itr=head;
+			for(;itr->next != prev;itr=itr->next){ }
+			Node<Object> *del = itr->next;
+			itr->next = itr->next->next;
+			delete del;	
+			prev=NULL;
 		}
 };
 
