@@ -1,88 +1,89 @@
-#ifndef LINKEDLIST_HPP
-#define LINKEDLIST_HPP
+#ifndef LinkedList_HPP
+#define LinkedList_HPP
 
+#include "Node.hpp"
 #include "Iterator.hpp"
-#include "NoSuchElement.hpp"
 
 template <typename Object>
 class LinkedList{
 	private:
 		Node<Object> *head;
-		int size;
 		
-		Iterator<Object> FindPrevByPosition(int position){
-			if(position < 0 || position > size) throw NoSuchElement("No Such Element");
+		Node<Object>* FindPrevByPosition(int position){
+			if(position < 0 || position > size()) throw "Index out of range";
 			int index=0;
-			Iterator<Object> iterator(head);
-			while(iterator.hasNext() && position != index){
-				iterator.next();
-				index++;
+			Node<Object> *itr=head;
+			for(;itr!=NULL;itr=itr->next,index++){
+				if(position == index) return itr;
 			}
-			return iterator;
-		}
+			return NULL;
+		}	
 	public:
 		LinkedList(){
-			head = new Node<Object>();
-			size=0;
+			head = new Node<Object>(Object());
 		}
-		bool isEmpty()const{
+		Iterator<Object> iterator(){
+			Iterator<Object> itr(head);
+			return itr;
+		}
+		bool isEmpty() const{
 			return head->next == NULL;
 		}
-		int Count()const{
-			return size;
+		int size() const{
+			int length=0;
+			for(Node<Object> *itr=head->next;itr!=NULL;itr=itr->next){
+				length++;
+			}
+			return length;
 		}
-		void add(const Object& item){
-			insert(size,item);
-		}
-		void insert(int index,const Object& item){
-			Iterator<Object> iterator = FindPrevByPosition(index);
-			iterator.current->next = new Node<Object>(item,iterator.current->next);
-			size++;
-		}
-		const Object& first()const throw(NoSuchElement){
-			if(isEmpty()) throw NoSuchElement("No Such Element");
+		const Object& first(){
+			if(isEmpty()) throw "Empty list";
 			return head->next->item;
 		}
-		const Object& last()throw(NoSuchElement){
-			if(isEmpty()) throw NoSuchElement("No Such Element");
-			return FindPrevByPosition(size).getCurrent();
+		const Object& last(){
+			if(isEmpty()) throw "Empty list";
+			return FindPrevByPosition(size())->item;
 		}
-		int indexOf(const Object& item)throw(NoSuchElement){
-			int index=0;
-			for(Iterator<Object> iterator(head->next);iterator.hasNext();iterator.next()){
-				if(iterator.getCurrent() == item) return index;
-				index++;
-			}
-			throw NoSuchElement("No Such Element");
+		void add(const Object& item){
+			insert(size(),item);
 		}
-		const Object& elementAt(int index)throw(NoSuchElement){
-			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
-			Iterator<Object> iterator = FindPrevByPosition(index);
-			return iterator.current->next->item;
+		void insert(int index,const Object& item){
+			Node<Object> *prev = FindPrevByPosition(index);
+			prev->next = new Node<Object>(item,prev->next);
 		}
-		bool find(const Object& item)const{
-			for(Iterator<Object> iterator(head->next);iterator.hasNext();iterator.next()){
-				if(iterator.getCurrent() == item) return true;
+		void remove(const Object& item){
+			int position = indexOf(item);
+			removeAt(position);			
+		}
+		void removeAt(int index){
+			if(isEmpty()) throw "Empty list";
+			Node<Object> *del;
+			Node<Object> *prev = FindPrevByPosition(index);
+			del = prev->next;
+			prev->next = prev->next->next;
+			
+			delete del;
+		}
+		bool find(const Object& item) const{
+			for(Node<Object> *itr=head->next;itr!=NULL;itr=itr->next){
+				if(itr->item == item) return true;
 			}
 			return false;
 		}
-		void remove(const Object& item){
-			int index = indexOf(item);
-			removeAt(index);
-		}
-		void removeAt(int index)throw(NoSuchElement){
-			if(index < 0 || index >= size) throw NoSuchElement("No Such Element");
-			Iterator<Object> iterator = FindPrevByPosition(index);
-			Node<Object> *del = iterator.current->next;
-			iterator.current->next = iterator.current->next->next;
-			delete del;
-			size--;
-		}
-		friend ostream& operator<<(ostream& screen,LinkedList<Object> &right){
-			for(Iterator<Object> iterator(right.head->next);iterator.hasNext();iterator.next()){
-				screen<<iterator.getCurrent()<<" -> ";
+		int indexOf(const Object& item){
+			int index=0;
+			for(Node<Object> *itr=head->next;itr!=NULL;itr=itr->next,index++){
+				if(itr->item == item) return index;
 			}
-			screen<<"NULL"<<endl;
+			throw "Index out of range";
+		}
+		friend ostream& operator<<(ostream& screen, LinkedList &right){
+			if(right.isEmpty()) screen<<"Empty list";
+			else{
+				for(Node<Object> *itr=right.head->next;itr!=NULL;itr=itr->next){
+					screen<<itr->item<<" ";
+				}
+			}
 			return screen;
 		}
 		void clear(){
@@ -90,10 +91,8 @@ class LinkedList{
 				removeAt(0);
 		}
 		~LinkedList(){
-			clear();
+			clear();	
 			delete head;
 		}
-		
 };
-
 #endif
