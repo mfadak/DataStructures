@@ -1,5 +1,19 @@
 #include "HeapTree.hpp"
 
+HeapTree::HeapTree(int* items,int length){
+	this->items = new int[length];
+	this->capacity = length;
+	this->length = 0;
+	for(int index=0;index<length;index++){
+		Add(items[index]);
+	}
+}
+void HeapTree::Add(int item){
+	if(length == capacity) throw "Capacity Error";
+	items[length] = item;
+	length++;
+	HeapfyUp(length-1);
+}
 int HeapTree::LeftChildIndex(int index){
 	return 2*index+1;
 }
@@ -43,22 +57,12 @@ void HeapTree::Swap(int& x,int& y){
 	int tmp = x;
 	x=y;
 	y=tmp;
-}
-	
-HeapTree::HeapTree(int capacity){
-	items = new int[capacity];
-	this->capacity = capacity;
-	length=0;
-}
+}	
+
 bool HeapTree::IsEmpty(){
 	return length == 0;
 }
-void HeapTree::Add(int item){
-	if(length == capacity) throw "Capacity Error";
-	items[length] = item;
-	length++;
-	HeapfyUp(length-1);
-}
+
 int HeapTree::RemoveMin(){
 	if(IsEmpty()) throw "No element found";
 	int minItem = items[0];
@@ -66,6 +70,13 @@ int HeapTree::RemoveMin(){
 	length--;
 	if(length > 0) HeapfyDown(0);
 	return minItem;
+}
+int* HeapTree::Sort(){
+	int* ordered = new int[capacity];
+	for(int index=0;!IsEmpty();index++){
+		ordered[index] = RemoveMin();
+	}
+	return ordered;
 }
 HeapTree::~HeapTree(){
 	delete [] items;
