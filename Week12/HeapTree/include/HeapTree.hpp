@@ -16,11 +16,12 @@ class HeapTree{
 		void HeapfyUp(int);
 		void HeapfyDown(int);
 		void Swap(int&,int&);
-	public:
-		HeapTree(int);
 		bool IsEmpty();
 		void Add(int);
 		int RemoveMin();
+	public:
+		HeapTree(int*,int);
+		int* Sort();
 		~HeapTree();
 };
 
