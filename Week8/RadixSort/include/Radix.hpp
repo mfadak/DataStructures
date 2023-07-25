@@ -2,19 +2,14 @@
 #define RADIX_HPP
 
 #include "Queue.hpp"
-#include <cmath>
 
 class Radix{
 	private:	
 		int* numbers;
 		int length;
 		Queue<int> **queues;
-		int maxStep;
 		
-		int MaxStepNumber();
-		int power(int);
-		int StepCount(int);
-		int* QueueCurrentLengths();
+		int findMax();
 	public:
 		Radix(int*, int);
 		int* Sort();
